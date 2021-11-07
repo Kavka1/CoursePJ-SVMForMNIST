@@ -27,6 +27,3 @@ def visualization(imgs, true_labels = None, model_path = "/Users/xukang/Project/
         plt.title(f"label: {true_labels[i]} pred: {pred_labels[i]}")
         plt.imshow(imgs[0].reshape((28, 28)))
         plt.show()
-
-if __name__ == "__main__":
-    print(load_config())
