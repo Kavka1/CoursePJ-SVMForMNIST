@@ -1,30 +1,28 @@
 from typing import List, Union, Dict
 import json
-import numpy as np
-import struct
 import os
-import matplotlib.pyplot as plt
 
 
-CONFIG_PATH = "/home/xukang/GitRepo/CoursePJ-SVMForMNIST/src/config.json"
+def load_config() -> Dict:
+    """
+    Load the experiment config from file config.json
 
-def load_config(path: str = CONFIG_PATH):
-    with open(path, mode='r') as source:
-        config = json.load(source)
-    return config
+    Returns:
+        Dict: [The config Dict like {'kernel': 'rbf', 'sample_num': 5000, ...}]
+    """
+    config_path = os.path.abspath('.') + '/config.json'                 # Get the config.json file path
+    with open(config_path, mode='r') as source:                         # Open the config.json file
+        config = json.load(source)                                      # Load the json file and transform it to Dict type 
+    return config                                                       # Return the config dict
 
 
 def check_path(path: str) -> None:
-    if not os.path.exists(path):
-        os.mkdir(path)
+    """
+    Check whether the path exists, if not then create the direction
 
+    Args:
+        path (str): [the path which needs check]
+    """
+    if not os.path.exists(path):                                        # Check whether this path exist
+        os.mkdir(path)                                                  # if don't exists, then create this direction
 
-def visualization(imgs, true_labels = None, model_path = "/Users/xukang/Project/Repo/svm-minist/model/svm.model"):
-    clf = joblib.load(model_path)
-    pred = clf.predict(imgs)
-
-    for i, img in enumerate(imgs[:8]):
-        plt.figure()
-        plt.title(f"label: {true_labels[i]} pred: {pred_labels[i]}")
-        plt.imshow(imgs[0].reshape((28, 28)))
-        plt.show()

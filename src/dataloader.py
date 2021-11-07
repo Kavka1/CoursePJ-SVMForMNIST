@@ -1,8 +1,6 @@
 from typing import List, Dict, Tuple, Union, Callable
 import struct
 import numpy as np
-from numpy.lib.function_base import select
-from utils import load_config
 
 
 class DataLoader(object):
