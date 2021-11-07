@@ -1,0 +1,6 @@
+{
+    "dataset_pth": "/Users/xukang/Project/Repo/svm-minist/dataset/",
+
+    "kernel": 0,
+    "preprocessing": 0
+}
