@@ -3,12 +3,10 @@ import json
 import numpy as np
 import struct
 import os
-from sklearn.datasets import fetch_openml
 import matplotlib.pyplot as plt
 
 
-CONFIG_PATH = "/Users/xukang/Project/Repo/svm-minist/src/config.json"
-
+CONFIG_PATH = "/home/xukang/GitRepo/CoursePJ-SVMForMNIST/src/config.json"
 
 def load_config(path: str = CONFIG_PATH):
     with open(path, mode='r') as source:
@@ -16,8 +14,9 @@ def load_config(path: str = CONFIG_PATH):
     return config
 
 
-def preprocess_imgs(imgs: np.array) -> np.array:
-    return imgs.astype(np.float64) / 255
+def check_path(path: str) -> None:
+    if not os.path.exists(path):
+        os.mkdir(path)
 
 
 def visualization(imgs, true_labels = None, model_path = "/Users/xukang/Project/Repo/svm-minist/model/svm.model"):
@@ -29,11 +28,3 @@ def visualization(imgs, true_labels = None, model_path = "/Users/xukang/Project/
         plt.title(f"label: {true_labels[i]} pred: {pred_labels[i]}")
         plt.imshow(imgs[0].reshape((28, 28)))
         plt.show()
-
-
-if __name__ == "__main__":
-    train_set, train_label, test_set, test_label = load_dataset()
-    train_set = preprocess_imgs(train_set)
-    test_set = preprocess_imgs(test_set)
-
-    

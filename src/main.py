@@ -1,39 +1,54 @@
 from typing import List, Dict, Union
-from sklearn import svm
-import joblib
-import numpy as np
-import os, sys, time
-from utils import load_dataset, preprocess_imgs, visualization
-import matplotlib.pyplot as plt
+from copy import copy
+from dataloader import DataLoader
+from utils import load_config
+from svm import SVM
+from multiprocessing import Process
 
 
-def create_svm(decision = 'ovr'):
-    clf = svm.SVC(C=1.0, kernel='rbf', decision_function_shape=decision)
-    return clf
+def train(config: Dict):
+    svm = SVM(config)
+    loader = DataLoader(config)
+
+    loader.preprocess(
+        inverse_color=config['using_inverse_color'], 
+        normalize=config['using_normalize']
+    )
+
+    svm.train(
+        data= loader.train_img[:config['train_sample_num']], 
+        label= loader.train_label[:config['train_sample_num']]
+    )
+    svm.evaluate_and_save(
+        data= loader.test_img[:5000],
+        label= loader.test_label[:5000]
+    )
 
 
-def train(data, label, path = "/Users/xukang/Project/Repo/svm-minist/model/svm.model"):
-    clf = create_svm()
-    st = time.time()
-    rf = clf.fit(data, label)
-    joblib.dump(rf, path)
-    et = time.time()
-    print(f"Traning time : {et - st}")
+def run() -> None:
+    origin_config = load_config()
+    
+    sample_num = origin_config['train_sample_num']
+    kernel = origin_config['kernel']
+    inverse_color = origin_config['using_inverse_color']
+    normalize = origin_config['using_normalize']
 
-
-def evaluate(data, label, model_path = "/Users/xukang/Project/Repo/svm-minist/model/svm.model"):
-    clf = joblib.load(model_path)
-    pred = clf.predict(data)
-    score = clf.score(data, label)
-    print(f"Precise: {score}")
-    return pred
+    for sample_n in sample_num:
+        for k in kernel:
+            for inverse in inverse_color:
+                for normal in normalize:
+                    exp_name = f"sample-{sample_n}_kernel-{k}_inverse-{inverse}_normal-{normal}"
+                    config = copy(origin_config)
+                    config.update({
+                        'train_sample_num': sample_n,
+                        'kernel': k,
+                        'using_inverse_color': inverse,
+                        'using_normalize': normal,
+                        'save_path': origin_config['save_path'] + f'{exp_name}/'
+                    })
+                    p = Process(target= train, args=(config, ))
+                    p.start()
 
 
 if __name__ == "__main__":
-    train_set, train_label, test_set, test_label = load_dataset()
-    train_set = preprocess_imgs(train_set)
-    test_set = preprocess_imgs(test_set)
-    
-    pred_label = evaluate(test_set, test_label)
-
-    visualization(test_set, test_label, pred_label)
+    run()
