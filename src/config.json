@@ -1,5 +1,5 @@
 {
-    "dataset_pth": "/home/xukang/GitRepo/CoursePJ-SVMForMNIST/dataset/",
+    "dataset_pth": "/Users/xukang/Project/Repo/CoursePJ-SVMForMNIST/dataset/",
     "save_path": "/data/xukang/Project/CoursePJ-SVMForMNIST/results/",
     "model_path": "/home/xukang/GitRepo/CoursePJ-SVMForMNIST/results/sample-15000_kernel-linear_inverse-0_normal-1/",
 
