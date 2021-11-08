@@ -1,7 +1,7 @@
 {
-    "dataset_pth": "/data/xukang/Project/CoursePJ-SVMForMNIST/dataset/",
-    "save_path": "/data/xukang/Project/CoursePJ-SVMForMNIST/results/",
-    "model_path": "/data/xukang/Project/CoursePJ-SVMForMNIST/results/",
+    "dataset_pth": "/Users/xukang/Project/Repo/CoursePJ-SVMForMNIST/dataset/",
+    "save_path": "/Users/xukang/Project/Repo/CoursePJ-SVMForMNIST/results/",
+    "model_path": "/Users/xukang/Project/Repo/CoursePJ-SVMForMNIST/results/",
 
     "train_sample_num": [2000, 5000, 10000, 15000],
     "kernel": ["Histogram", "linear", "rbf", "poly", "sigmoid"],

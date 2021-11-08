@@ -65,6 +65,58 @@ def show_confusion_matrix(model: SVC, image: np.array, label: np.array) -> None:
     plt.show()                                                                                     # Show the confusion matrix figure
 
 
+def show_precision_with_increase_samples():
+    """
+    Show the precision increment with the quantity of samples increases
+    """
+    result_path = os.path.abspath('.') + '/results'                     # Get the result path
+    file_list = os.listdir(result_path)                                 # Read all the files in this path
+    
+    precision = {
+        'rbf': [], 
+        'linear': [], 
+        'Histogram': [], 
+        'poly': [], 
+        'sigmoid': []
+    }                                                                   # save precision with different samples trained and different kernels
+
+    for kernel in list(precision.keys()):
+        prec = []
+        for dir in file_list:
+            if dir.split('_')[1].split('-')[-1] != kernel:
+                continue
+
+            use_normal = dir.split('_')[-1].split('-')[-1]
+            use_inverse = dir.split('_')[-2].split('-')[-1]
+            if use_normal == '0' or use_inverse == '0':
+                continue
+
+            sample_num = int(dir.split('_')[0].split('-')[-1])
+            js = result_path + '/' + dir + '/result.json'                   # Get the result.json file for each experiment
+            with open(js, 'r') as f:
+                js = json.load(f)
+            prec.append((sample_num, js['accuracy']))
+        prec.sort(key=lambda x: x[0])
+
+        precision[kernel] = [item[1] for item in prec]
+
+        print(f"kernel: {kernel} precision: {prec}")
+    
+    print(precision)
+
+    x_sample = [2000, 5000, 10000, 15000]
+    plt.figure()
+    for kernel in precision.keys():
+        plt.plot(x_sample, precision[kernel], label=kernel, marker='x')
+
+    plt.legend()
+    plt.grid()
+    plt.title("Precision with different quantity of samples")
+    plt.xlabel("sample quantity")
+    plt.ylabel("precision")
+    plt.show()
+
+
 def show_all_precision() -> None:
     """
     Show the all precision value of all experiments
@@ -98,4 +150,5 @@ if __name__ == "__main__":
     #show_report(test_label, pred)
     show_confusion_matrix(model, test_sample, test_label)
     '''
-    show_all_precision()
+    #show_all_precision()
+    show_precision_with_increase_samples()
