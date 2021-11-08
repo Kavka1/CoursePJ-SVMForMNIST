@@ -6,7 +6,7 @@ from svm import SVM
 from multiprocessing import Process
 
 
-def train(config: Dict):
+def train(config: Dict) -> None:
     """
     Train function which open one experiment, witch will be called by Process to implement the parallel experiments
 
@@ -43,7 +43,7 @@ def run() -> None:
     inverse_color = origin_config['using_inverse_color']            # Get all inverse_color parameters 
     normalize = origin_config['using_normalize']                    # Get all normalization parameters
 
-    for sample_n in sample_num:                                     # Do the grid search to get each combination of the parameters above
+    for sample_n in sample_num:                                     # Do the grid search to get all combinations of the parameters above
         for k in kernel:
             for inverse in inverse_color:
                 for normal in normalize:
