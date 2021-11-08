@@ -1,6 +1,7 @@
 from typing import List, Dict, Tuple, Union, Callable
 import struct
 import numpy as np
+from utils import normalize_data
 
 
 class DataLoader(object):
@@ -76,9 +77,13 @@ class DataLoader(object):
         if inverse_color:
             self.train_img = 255. - self.train_img                                      # If using inverse_color function, transform the pixel x to 255 - x
             self.test_img = 255. - self.test_img                                        # Same to test_set images
-        if normalize:
-            self.train_img = self.train_img / 255.                                      # If using normalization function, transform the pixel x to x / 255, make every pixel data in [0, 1]
-            self.test_img = self.test_img / 255.                                        # Same to test_set images
         
+        self.train_img = self.train_img / 255.                                      
+        self.test_img = self.test_img / 255.   
+        
+        if normalize:                                                                   
+            self.train_img = normalize_data(self.train_img)                             # If using normalization function, transform the pixel x to (x - mean) / var 
+            self.test_img = normalize_data(self.test_img)                               # Same to test_set images
+
         self.train_img = self.train_img.reshape(-1, 28*28)                              # Transform the shape (sample_num, 28, 28) to (sample, 28*28)
         self.test_img = self.test_img.reshape(-1, 28*28)                                # Same to test_set images

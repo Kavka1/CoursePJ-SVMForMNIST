@@ -1,6 +1,7 @@
 from typing import List, Union, Dict
 import json
 import os
+import numpy as np
 
 
 def load_config() -> Dict:
@@ -26,3 +27,14 @@ def check_path(path: str) -> None:
     if not os.path.exists(path):                                        # Check whether this path exist
         os.mkdir(path)                                                  # if don't exists, then create this direction
 
+
+def normalize_data(data: np.array) -> np.array:
+    """
+    The normalize tool for data preprocessing
+
+    Args:
+        data (np.array): [train_set img or test_set img]
+    """
+    mean = data.mean()                                                  # Get the mean of data
+    var = data.var()                                                    # Get the var of data
+    return (data - mean) / (var + 1e-8)                                 # Compute the normalization of data array
