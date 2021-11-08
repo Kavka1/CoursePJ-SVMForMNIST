@@ -1,9 +1,7 @@
 {
-    "is_train": true,
-    
-    "dataset_pth": "/data/xukang/Project/CoursePJ-SVMForMNIST/dataset/",
+    "dataset_pth": "/home/xukang/GitRepo/CoursePJ-SVMForMNIST/dataset/",
     "save_path": "/data/xukang/Project/CoursePJ-SVMForMNIST/results/",
-    "model_path": "/data/xukang/Project/CoursePJ-SVMForMNIST/results/",
+    "model_path": "/home/xukang/GitRepo/CoursePJ-SVMForMNIST/results/sample-15000_kernel-linear_inverse-0_normal-1/",
 
     "train_sample_num": [2000, 5000, 10000, 15000],
     "kernel": ["Histogram", "linear", "rbf", "poly", "sigmoid"],

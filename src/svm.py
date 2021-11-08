@@ -18,7 +18,7 @@ class SVM(object):
         Initialize
 
         Args:
-            config (Dict): [the config dict evolving some setting]
+            config (Dict): [the config dict involving some setting]
         """
         super().__init__()                                                          # Super class initialize
 
