@@ -36,5 +36,5 @@ def normalize_data(data: np.array) -> np.array:
         data (np.array): [train_set img or test_set img]
     """
     mean = data.mean()                                                  # Get the mean of data
-    var = data.std()                                                    # Get the var of data
-    return (data - mean) / (var + 1e-8)                                 # Compute the normalization of data array
+    std = data.std()                                                    # Get the var of data
+    return (data - mean) / (std + 1e-8)                                 # Compute the normalization of data array
