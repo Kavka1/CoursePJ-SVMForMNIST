@@ -1,3 +1,7 @@
+# SVM for MNIST-10 dataset
+
+## Project tree
+```
 .
 ├── dataset
 │   ├── test
